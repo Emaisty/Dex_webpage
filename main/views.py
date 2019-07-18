@@ -5,7 +5,12 @@ from django.views.decorators.csrf import csrf_protect
 
 
 def index(request):
-    return render(request, 'index.html', {'auth': request.user.is_authenticated})
+    if request.user.is_authenticated:
+        content = {'auth': 1,
+                   'name': request.user.username}
+    else:
+        content = {'auth': 0}
+    return render(request, 'index.html', content)
 
 
 @csrf_protect

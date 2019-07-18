@@ -21,6 +21,7 @@
                 </table>
             </form>
         {% else %}
+            {{ name }}
             <form action="../log_out/" method="post"> {% csrf_token %}
                 <input type="submit" value="выйти">
             </form>
