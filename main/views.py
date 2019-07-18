@@ -17,8 +17,12 @@ def index(request):
 def log_in(request):
     data = request.POST.dict()
     user = authenticate(username=data['name'], password=data['password'])
-    login(request, user)
-    return redirect('/')
+    if user is not None:
+        login(request, user)
+        return redirect('/')
+    else:
+        print(4)
+        redirect('error', 'cont') #TODO right rederect
 
 
 @csrf_protect
@@ -29,7 +33,8 @@ def log_out(request):
 
 def register(request):
     if request.method == "GET":
-        return render(request, 'register.html')
+        content = {'page_reg': 1}
+        return render(request, 'register.html', content)
     else:
         # check
         data = request.POST.dict()
@@ -39,4 +44,10 @@ def register(request):
         print(name, email, psswd)
         user = User.objects.create_user(name, email, psswd)
         user.save()
-        return redirect('../log_in')
+        user = authenticate(username=name, password=psswd)
+        login(request, user)
+        return redirect('/')
+
+#TODO Error func with error page
+def error(request, type):
+    return render(request, 'error.html')

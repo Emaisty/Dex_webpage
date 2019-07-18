@@ -5,6 +5,7 @@
     <title>Title</title>
 </head>
 <body>
+{% include 'snippets/header.html' %}
 <form action="" method="post"> {% csrf_token %}
     <label>Name:</label> <input name="name" type="text" placeholder="Обязательно"><br><br>
     <label>Email:</label> <input name="email" type="text" placeholder="Не обязательно"><br><br>

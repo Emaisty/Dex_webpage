@@ -6,7 +6,8 @@
 <!-- TODO: make more beautiful--->
 <div class="head">
 
-    <div class="logo">DEX</div>
+    <div class="logo"><a href="../">DEX</a></div>
+
     <div class="enter">
         {% if not auth %}
             <form action="../log_in/" method="post"> {% csrf_token %}
@@ -20,6 +21,9 @@
                     </tr>
                 </table>
             </form>
+            {% if not page_reg %}
+                <a href="../register/">lol</a>
+            {% endif %}
         {% else %}
             {{ name }}
             <form action="../log_out/" method="post"> {% csrf_token %}
