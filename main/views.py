@@ -21,8 +21,7 @@ def log_in(request):
         login(request, user)
         return redirect('/')
     else:
-        print(4)
-        redirect('error', 'cont') #TODO right rederect
+        return error(request, 'NoUser')
 
 
 @csrf_protect
@@ -33,7 +32,7 @@ def log_out(request):
 
 def register(request):
     if request.method == "GET":
-        content = {'page_reg': 1}
+        content = {'page_reg': True}
         return render(request, 'register.html', content)
     else:
         # check
@@ -48,6 +47,16 @@ def register(request):
         login(request, user)
         return redirect('/')
 
-#TODO Error func with error page
-def error(request, type):
-    return render(request, 'error.html')
+
+def error(request, type=None):
+    if type == 'NoUser':
+        content = {
+            'code': 304,
+            'message': 'Not found user'
+        }
+    else:
+        content = {
+            'code': '500',
+            'message': 'Unknow error'
+        }
+    return render(request, 'error.html', content)
